@@ -3,6 +3,7 @@ import { useAuth } from '@/hooks/useAuth';
 import LoginPage from './auth/LoginPage';
 import AdminLayout from './layout/AdminLayout';
 import Dashboard from './dashboard/Dashboard';
+import AppointmentsManagement from './appointments/AppointmentsManagement';
 import { Box, CircularProgress, Typography } from '@mui/material';
 
 export const AMSCApp: React.FC = () => {
@@ -46,16 +47,7 @@ export const AMSCApp: React.FC = () => {
       case 'dashboard':
         return <Dashboard />;
       case 'appointments':
-        return (
-          <Box>
-            <Typography variant="h4" sx={{ mb: 3, fontWeight: 600 }}>
-              Appointments Management
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              Coming in Phase 2 - Advanced appointments with MUIX DataGrid
-            </Typography>
-          </Box>
-        );
+        return <AppointmentsManagement />;
       case 'billing':
         return (
           <Box>
