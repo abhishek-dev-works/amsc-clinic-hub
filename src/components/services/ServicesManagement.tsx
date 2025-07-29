@@ -253,9 +253,6 @@ const ServicesManagement: React.FC = () => {
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4" sx={{ fontWeight: 600 }}>
-          Services Management
-        </Typography>
         <Button
           variant="contained"
           startIcon={<AddIcon />}

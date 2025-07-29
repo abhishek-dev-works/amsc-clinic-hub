@@ -117,9 +117,6 @@ const Dashboard: React.FC = () => {
 
   return (
     <Box>
-      <Typography variant="h4" sx={{ mb: 3, fontWeight: 600 }}>
-        Dashboard
-      </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
         Welcome back! Here's what's happening at AMSC today.
       </Typography>

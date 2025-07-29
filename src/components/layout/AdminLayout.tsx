@@ -31,6 +31,7 @@ import {
   Assessment,
 } from '@mui/icons-material';
 import amscLogo from '@/assets/amsc-logo.png';
+import { amscTheme } from '@/theme/muiTheme';
 
 const drawerWidth = 280;
 
@@ -165,7 +166,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
             <MenuIcon />
           </IconButton>
           
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, color: 'text.primary' }}>
+          <Typography variant="h5" noWrap component="div" sx={{ flexGrow: 1, color: amscTheme.palette.primary.main, fontWeight: 'bold' }} id="app-title">
             {menuItems.find(item => item.id === activeTab)?.label || 'AMSC Admin Portal'}
           </Typography>
           
