@@ -2,13 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import LoginPage from './auth/LoginPage';
 import AdminLayout from './layout/AdminLayout';
-import Dashboard from './dashboard/Dashboard';
-import AppointmentsManagement from './appointments/AppointmentsManagement';
-import PatientLog from './patients/PatientLog';
-import ServicesManagement from './services/ServicesManagement';
-import RevenueTracking from './revenue/RevenueTracking';
-import BillingInvoices from './billing/BillingInvoices';
-import Settings from './settings/Settings';
+import { AMSCRouter } from './AMSCRouter';
 import { Box, CircularProgress, Typography } from '@mui/material';
 
 export const AMSCApp: React.FC = () => {
@@ -46,35 +40,13 @@ export const AMSCApp: React.FC = () => {
     );
   }
 
-  // Render main admin interface
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'dashboard':
-        return <Dashboard />;
-      case 'appointments':
-        return <AppointmentsManagement />;
-      case 'billing':
-        return <BillingInvoices />;
-      case 'revenue':
-        return <RevenueTracking />;
-      case 'patients':
-        return <PatientLog />;
-      case 'services':
-        return <ServicesManagement />;
-      case 'settings':
-        return <Settings />;
-      default:
-        return <Dashboard />;
-    }
-  };
-
   return (
     <AdminLayout
       activeTab={activeTab}
       onTabChange={setActiveTab}
       onLogout={logout}
     >
-      {renderContent()}
+      <AMSCRouter />
     </AdminLayout>
   );
 };

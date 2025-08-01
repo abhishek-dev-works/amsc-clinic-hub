@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Typography,
@@ -11,6 +12,8 @@ import {
   IconButton,
   Stack,
 } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { fetchAppointmentsRequest } from '../../store/slices/appointmentsSlice';
 
 import {
   DataGrid,
@@ -116,11 +119,18 @@ const statusColors = {
 } as const;
 
 const AppointmentsManagement: React.FC = () => {
-  const [appointments] = useState(mockAppointments);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { appointments, isLoading, filters } = useAppSelector(state => state.appointments);
+  
   const [filterStatus, setFilterStatus] = useState('');
   const [filterDoctor, setFilterDoctor] = useState('');
   const [filterDate, setFilterDate] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    dispatch(fetchAppointmentsRequest());
+  }, [dispatch]);
 
   // Get unique doctors for filter dropdown
   const uniqueDoctors = useMemo(() => {
@@ -227,7 +237,11 @@ const AppointmentsManagement: React.FC = () => {
       sortable: false,
       renderCell: (params: GridRenderCellParams) => (
         <Stack direction="row" spacing={1}>
-          <IconButton size="small" color="primary">
+          <IconButton 
+            size="small" 
+            color="primary"
+            onClick={() => navigate(`/appointments/${params.row.id}`)}
+          >
             <EditIcon fontSize="small" />
           </IconButton>
           <IconButton size="small" color="error">
