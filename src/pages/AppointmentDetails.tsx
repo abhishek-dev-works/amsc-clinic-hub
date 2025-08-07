@@ -55,8 +55,7 @@ const AppointmentDetails: React.FC = () => {
   };
 
   const handleEdit = () => {
-    console.log('Edit appointment:', selectedAppointment?.id);
-    // TODO: Navigate to edit page or open edit modal
+    navigate(`/appointments/${selectedAppointment?.id}/edit`);
   };
 
   const handleDelete = () => {
@@ -252,7 +251,7 @@ const AppointmentDetails: React.FC = () => {
                 {selectedAppointment.doctor}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {selectedAppointment.service}
+                Attending Physician
               </Typography>
             </CardContent>
           </Card>

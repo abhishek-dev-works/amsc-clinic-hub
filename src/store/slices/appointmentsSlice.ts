@@ -77,7 +77,7 @@ const appointmentsSlice = createSlice({
     },
 
     // Update appointment
-    updateAppointmentRequest: (state) => {
+    updateAppointmentRequest: (state, action: PayloadAction<{ id: number; appointment: Partial<Appointment> }>) => {
       state.isLoading = true;
       state.error = null;
     },
@@ -98,7 +98,7 @@ const appointmentsSlice = createSlice({
     },
 
     // Delete appointment
-    deleteAppointmentRequest: (state) => {
+    deleteAppointmentRequest: (state, action: PayloadAction<number>) => {
       state.isLoading = true;
       state.error = null;
     },
