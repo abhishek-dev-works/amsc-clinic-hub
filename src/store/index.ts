@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import authSlice from './slices/authSlice';
 import appointmentsSlice from './slices/appointmentsSlice';
+import billingSlice from './slices/billingSlice';
 import { rootSaga } from './rootSaga';
 
 // Create saga middleware
@@ -12,6 +13,7 @@ export const store = configureStore({
   reducer: {
     auth: authSlice,
     appointments: appointmentsSlice,
+    billing: billingSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

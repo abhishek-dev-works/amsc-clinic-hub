@@ -22,6 +22,7 @@ import {
   LocalHospital as LocalHospitalIcon,
   Schedule as ScheduleIcon,
   Notes as NotesIcon,
+  Receipt as ReceiptIcon,
 } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { fetchAppointmentRequest, clearSelectedAppointment } from '../store/slices/appointmentsSlice';
@@ -61,6 +62,10 @@ const AppointmentDetails: React.FC = () => {
   const handleDelete = () => {
     console.log('Delete appointment:', selectedAppointment?.id);
     // TODO: Show confirmation dialog and delete
+  };
+
+  const handleProceedToBilling = () => {
+    navigate(`/billing/invoice/${selectedAppointment?.id}`);
   };
 
   const handleContact = (type: 'phone' | 'email') => {
@@ -129,6 +134,14 @@ const AppointmentDetails: React.FC = () => {
         </Box>
         
         <Stack direction="row" spacing={1}>
+          <Button
+            variant="contained"
+            startIcon={<ReceiptIcon />}
+            onClick={handleProceedToBilling}
+            color="primary"
+          >
+            Proceed to Billing
+          </Button>
           <Button
             variant="outlined"
             startIcon={<EditIcon />}
@@ -286,6 +299,16 @@ const AppointmentDetails: React.FC = () => {
               <Stack spacing={2}>
                 <Button
                   variant="contained"
+                  fullWidth
+                  startIcon={<ReceiptIcon />}
+                  onClick={handleProceedToBilling}
+                  color="primary"
+                >
+                  Proceed to Billing
+                </Button>
+                
+                <Button
+                  variant="outlined"
                   fullWidth
                   startIcon={<EditIcon />}
                   onClick={handleEdit}

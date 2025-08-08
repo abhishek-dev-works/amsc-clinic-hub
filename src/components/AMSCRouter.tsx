@@ -4,6 +4,7 @@ import Dashboard from './dashboard/Dashboard';
 import AppointmentsManagement from './appointments/AppointmentsManagement';
 import AppointmentDetails from '../pages/AppointmentDetails';
 import EditAppointment from '../pages/EditAppointment';
+import InvoiceGenerator from './billing/InvoiceGenerator';
 import PatientLog from './patients/PatientLog';
 import ServicesManagement from './services/ServicesManagement';
 import RevenueTracking from './revenue/RevenueTracking';
@@ -18,6 +19,7 @@ export const AMSCRouter: React.FC = () => {
       <Route path="/appointments" element={<AppointmentsManagement />} />
       <Route path="/appointments/:id" element={<AppointmentDetails />} />
       <Route path="/appointments/:id/edit" element={<EditAppointment />} />
+      <Route path="/billing/invoice/:appointmentId" element={<InvoiceGenerator />} />
       <Route path="/patients" element={<PatientLog />} />
       <Route path="/services" element={<ServicesManagement />} />
       <Route path="/revenue" element={<RevenueTracking />} />
