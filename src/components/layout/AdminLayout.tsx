@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Box,
   Drawer,
@@ -43,13 +44,13 @@ interface AdminLayoutProps {
 }
 
 const menuItems = [
-  { id: 'dashboard', label: 'Dashboard', icon: <Dashboard /> },
-  { id: 'appointments', label: 'Appointments', icon: <Event /> },
-  { id: 'billing', label: 'Billing & Invoices', icon: <Payment /> },
-  { id: 'revenue', label: 'Revenue Tracking', icon: <Assessment /> },
-  { id: 'patients', label: 'Patient Log', icon: <People /> },
-  { id: 'services', label: 'Services Management', icon: <MedicalServices /> },
-  { id: 'settings', label: 'Settings', icon: <Settings /> },
+  { id: 'dashboard', label: 'Dashboard', icon: <Dashboard />, path: '/dashboard' },
+  { id: 'appointments', label: 'Appointments', icon: <Event />, path: '/appointments' },
+  { id: 'billing', label: 'Billing & Invoices', icon: <Payment />, path: '/billing' },
+  { id: 'revenue', label: 'Revenue Tracking', icon: <Assessment />, path: '/revenue' },
+  { id: 'patients', label: 'Patient Log', icon: <People />, path: '/patients' },
+  { id: 'services', label: 'Services Management', icon: <MedicalServices />, path: '/services' },
+  { id: 'settings', label: 'Settings', icon: <Settings />, path: '/settings' },
 ];
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ 
@@ -62,6 +63,15 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get current active tab based on the current route
+  const getCurrentTab = () => {
+    const currentPath = location.pathname;
+    const activeItem = menuItems.find(item => currentPath.startsWith(item.path));
+    return activeItem?.id || 'dashboard';
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -106,41 +116,50 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
 
       {/* Navigation Menu */}
       <List sx={{ px: 2, py: 1 }}>
-        {menuItems.map((item) => (
-          <ListItem key={item.id} disablePadding sx={{ mb: 0.5 }}>
-            <ListItemButton
-              selected={activeTab === item.id}
-              onClick={() => onTabChange(item.id)}
-              sx={{
-                borderRadius: 2,
-                '&.Mui-selected': {
-                  backgroundColor: 'primary.main',
-                  color: 'primary.contrastText',
-                  '&:hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                  '& .MuiListItemIcon-root': {
-                    color: 'primary.contrastText',
-                  },
-                },
-                '&:hover': {
-                  backgroundColor: 'action.hover',
-                },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 40 }}>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText 
-                primary={item.label} 
-                primaryTypographyProps={{
-                  fontSize: '0.9rem',
-                  fontWeight: activeTab === item.id ? 600 : 500,
+        {menuItems.map((item) => {
+          const isCurrentlyActive = getCurrentTab() === item.id;
+          return (
+            <ListItem key={item.id} disablePadding sx={{ mb: 0.5 }}>
+              <ListItemButton
+                selected={isCurrentlyActive}
+                onClick={() => {
+                  navigate(item.path);
+                  onTabChange(item.id);
+                  if (isMobile) {
+                    setMobileOpen(false);
+                  }
                 }}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
+                sx={{
+                  borderRadius: 2,
+                  '&.Mui-selected': {
+                    backgroundColor: 'primary.main',
+                    color: 'primary.contrastText',
+                    '&:hover': {
+                      backgroundColor: 'primary.dark',
+                    },
+                    '& .MuiListItemIcon-root': {
+                      color: 'primary.contrastText',
+                    },
+                  },
+                  '&:hover': {
+                    backgroundColor: 'action.hover',
+                  },
+                }}
+              >
+                <ListItemIcon sx={{ minWidth: 40 }}>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText 
+                  primary={item.label} 
+                  primaryTypographyProps={{
+                    fontSize: '0.9rem',
+                    fontWeight: isCurrentlyActive ? 600 : 500,
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
     </Box>
   );
@@ -167,7 +186,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
           </IconButton>
           
           <Typography variant="h5" noWrap component="div" sx={{ flexGrow: 1, color: amscTheme.palette.primary.main, fontWeight: 'bold' }} id="app-title">
-            {menuItems.find(item => item.id === activeTab)?.label || 'AMSC Admin Portal'}
+            {menuItems.find(item => item.id === getCurrentTab())?.label || 'AMSC Admin Portal'}
           </Typography>
           
           {/* Profile Menu */}
